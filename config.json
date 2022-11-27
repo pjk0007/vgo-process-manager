@@ -1,0 +1,19 @@
+{
+  "name": "PM1",
+  "json": {
+    "deviceInfo": {
+      "company": "company",
+      "site": "site",
+      "operation": "process-manage",
+      "eq": "PM1"
+    },
+    "processInfo": [
+      {
+        "type": "edgeV",
+        "path": "./process/edgev1/edgev.exe"
+      }
+    ]
+  },
+  "description": "First Process Manager",
+  "server": "http://192.168.50.19:8083"
+}
