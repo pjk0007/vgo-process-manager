@@ -1,7 +1,6 @@
 package payload
 
 import (
-	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -21,13 +20,10 @@ func (p PayloadProcess) Create() any {
 	} else {
 		cmd = exec.Command(p.Path)
 	}
-	cmd.Run()
-	fmt.Println(cmd.Process.Pid)
+	cmd.Start()
 	return cmd.Process.Pid
 }
 
-// Process Kill
-// TODO: Process가 Kill되지 않고 Process를 감싸는 cmd, bash가 Kill되는 문제
 func (p PayloadProcess) Delete() any {
 	process, err := os.FindProcess(p.Pid)
 	if err != nil{

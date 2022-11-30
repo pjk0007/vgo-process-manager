@@ -1,6 +1,9 @@
 package config
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"os"
+)
 
 type Server struct {
 	TopicManager  string
@@ -14,4 +17,9 @@ func JsonToServer(jsonByte []byte) Server {
 	json.Unmarshal(jsonByte, &server)
 
 	return server
+}
+
+func (server Server) ToJson(path string){
+	data, _ := json.Marshal(server)
+	os.WriteFile(path,data, 0644)
 }

@@ -30,13 +30,23 @@ func main(){
 	registerOutput := api.PostRegister(*ProcessManager)
 	ProcessManager.Id = &registerOutput.Id
 	var Servers = registerOutput.Server
-	// var Servers = config.Server{Nats:[]string{"nats://127.0.0.1:4222"}}
 
 	/*
 	 * Zookeeper Config
 	 */ 
 	Zookeeper, _, _ := zk.Connect(Servers.Zookeeper,time.Second)
 	ProcessManager.Npath, _ = Zookeeper.Create(fmt.Sprintf("/process/%d",*ProcessManager.Id),[]byte{},zk.FlagEphemeral,zk.WorldACL(zk.PermAll))
+
+	/*
+	 * Save Config to config.json
+	 */
+	 ProcessManager.ToJson("config.json")
+	 
+
+	/*
+	 * Set Child Process Config
+	 */
+	ProcessManager.SetProcessConfig(Servers)
 
 	/*
 	 * Put Npath to Device manager
@@ -47,7 +57,6 @@ func main(){
 	 * Get Command Topic (from Topic manager)
 	 */
 	var CommandTopic = api.PostTopic(*ProcessManager).TopicId
-	// var CommandTopic = "command"
 	fmt.Println(CommandTopic)
 
 	// Nats Connect

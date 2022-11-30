@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"os"
+	"path"
 
 	"github.com/vcanus/vgo-process-manager/src/util"
 )
@@ -27,9 +28,22 @@ func JsonToConfig(path string) *Config{
 	var config = new(Config)
 	json.Unmarshal(byteValue, &config)
 
-	// if config.Id == 0{
-	// 	config.Id = nil
-	// }
 	return config
 }
 
+func (config Config) ToJson(path string){
+	data, _ := json.Marshal(config)
+	os.WriteFile(path,data, 0644)
+}
+
+// 모든 자식 프로세스 Config를 변경한다. (서버주소, 부모Id)
+func (config Config) SetProcessConfig(server Server){
+	for _, processInfo := range config.Json.ProcessInfo {
+		configPath := path.Dir(processInfo.ProcessPath) + "/config/"
+		process := JsonToProcess(configPath + "process.config")
+		process.ParentId = config.Id
+		process.ToJson(configPath + "process.config")
+
+		server.ToJson(configPath + "servers.config")
+	}
+}

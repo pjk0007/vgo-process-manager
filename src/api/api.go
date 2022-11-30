@@ -47,8 +47,11 @@ func PostRegister(processManager config.Config) RegisterOutput {
 }
 
 func PutNpath(processManager config.Config) {
+	client := &http.Client{}
 	reqBody := bytes.NewBufferString(util.ToJsonString(processManager))
-	http.Post(processManager.Server+"/api/process/manager/npath", "application/json", reqBody)
+	req, _ := http.NewRequest(http.MethodPut, processManager.Server+"/api/process/manager/npath", reqBody)
+	req.Header.Set("Content-Type","application/json")
+	client.Do(req)
 }
 
 func PostTopic(processManager config.Config) TopicOutput {
