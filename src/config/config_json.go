@@ -1,11 +1,11 @@
 package config
 
 type ConfigJson struct {
-	DeviceInfo  ConfigJsonDeviceInfo    `json:"deviceInfo"`
+	EquipmentInfo  ConfigJsonEquipmentInfo    `json:"equipmentInfo"`
 	ProcessInfo []ConfigJsonProcessInfo `json:"processInfo"`
 }
 
-type ConfigJsonDeviceInfo struct {
+type ConfigJsonEquipmentInfo struct {
 	Company   string `json:"company"`
 	Site      string `json:"site"`
 	Operation string `json:"operation"`

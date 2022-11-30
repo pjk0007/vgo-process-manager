@@ -1,7 +1,7 @@
 {
   "name": "PM1",
   "json": {
-    "deviceInfo": {
+    "equipmentInfo": {
       "company": "company",
       "site": "site",
       "operation": "process-manage",
@@ -10,7 +10,7 @@
     "processInfo": [
       {
         "type": "edgeV",
-        "path": "./process/edgev1/edgev.exe"
+        "path": "./process/guantlet/build.app"
       }
     ]
   },

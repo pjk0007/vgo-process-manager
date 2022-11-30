@@ -3,6 +3,7 @@ package api
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 
@@ -34,6 +35,7 @@ func JsonToTopicOutput(jsonByte []byte) TopicOutput{
 }
 
 func PostRegister(processManager config.Config) RegisterOutput {
+	fmt.Println(util.ToJsonString(processManager))
 	reqBody := bytes.NewBufferString(util.ToJsonString(processManager))
 	resp, err := http.Post(processManager.Server+"/api/process/manager", "application/json", reqBody)
 	util.CheckError(err)
